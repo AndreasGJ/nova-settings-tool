@@ -115,7 +115,7 @@ if (!function_exists('get_store_config'))
         if ($field) {
             if ($field->component == 'file-field') {
                 $config_value = Storage::disk($field->getStorageDisk())->url($config_value);
-            } else {
+            } elseif ($field->component != 'select-field') {
                 if ($field->component == 'date-time') {
                     $config_value = Carbon::parse($config_value);
                 }
