@@ -1,6 +1,7 @@
 <?php
 use Spatie\Valuestore\Valuestore;
 use Illuminate\Support\Facades\Storage;
+use Carbon\Carbon;
 
 if (!function_exists('get_store_config_panels'))
 {
@@ -115,6 +116,10 @@ if (!function_exists('get_store_config'))
             if ($field->component == 'file-field') {
                 $config_value = Storage::disk($field->getStorageDisk())->url($config_value);
             } else {
+                if ($field->component == 'date-time') {
+                    $config_value = Carbon::parse($config_value);
+                }
+
                 $temp_object = (object)[
                     $key => $config_value
                 ];
@@ -148,6 +153,3 @@ if (!function_exists('get_store_configs'))
         return (object)$values;
     }
 }
-
-
-
